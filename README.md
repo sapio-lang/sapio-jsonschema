@@ -1,4 +1,16 @@
-# Schemars
+# Sapio JSON Schema
+
+This is Sapio's fork of [Schemars](https://github.com/GREsau/schemars), based on
+upstream **1.2.2**, with optional schemas for the rust-bitcoin ecosystem. The
+package names remain `schemars` and `schemars_derive` so Cargo can patch the same
+`JsonSchema` trait throughout an application's dependency graph.
+
+Enable `bitcoin032` for Bitcoin 0.32 transactions, amounts, addresses, scripts,
+hashes and keys; enable `miniscript13` for Miniscript 13 policies and descriptors.
+Neither integration is enabled by default. See [Sapio integrations](SAPIO_EXTENSIONS.md)
+for setup, supported representations, and verification commands.
+
+The remaining documentation describes the upstream Schemars API.
 
 [![CI Build](https://img.shields.io/github/actions/workflow/status/GREsau/schemars/ci.yml?branch=master&logo=GitHub)](https://github.com/GREsau/schemars/actions)
 [![Crates.io](https://img.shields.io/crates/v/schemars)](https://crates.io/crates/schemars)
@@ -270,6 +282,8 @@ Schemars follows semantic versioning, with the following caveats:
 
 Schemars can implement `JsonSchema` on types from several popular crates, enabled via feature flags (dependency versions are shown in brackets):
 
+- `bitcoin032` - [bitcoin](https://crates.io/crates/bitcoin) (^0.32.102), including its hash and secp256k1 types
+- `miniscript13` - [miniscript](https://crates.io/crates/miniscript) (^13.1); enables `bitcoin032`
 - `arrayvec07` - [arrayvec](https://crates.io/crates/arrayvec) (^0.7)
 - `bigdecimal04` - [bigdecimal](https://crates.io/crates/bigdecimal) (^0.4)
 - `bytes1` - [bytes](https://crates.io/crates/bytes) (^1.0)

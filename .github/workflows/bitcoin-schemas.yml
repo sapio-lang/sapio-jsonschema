@@ -1,0 +1,21 @@
+name: Bitcoin schemas
+
+on: [push, pull_request, workflow_dispatch]
+
+permissions:
+  contents: read
+
+jobs:
+  schemas:
+    runs-on: ubuntu-latest
+    env:
+      CC_wasm32_unknown_unknown: clang
+    steps:
+      - uses: actions/checkout@v5
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32-unknown-unknown
+      - name: Check schemas against Bitcoin and Miniscript Serde
+        run: cargo test -p schemars --locked --features bitcoin032,miniscript13 --test bitcoin032 --test miniscript13 --test schema_value
+      - name: Check integrations without the standard library or derive
+        run: cargo check -p schemars --locked --no-default-features --features bitcoin032,miniscript13 --lib --target wasm32-unknown-unknown
