@@ -2,7 +2,7 @@
 name = "schemars"
 description = "Generate JSON Schemas from Rust code"
 homepage = "https://graham.cool/schemars/"
-repository = "https://github.com/GREsau/schemars"
+repository = "https://github.com/sapio-lang/sapio-jsonschema"
 version = "1.2.2"
 authors = ["Graham Esau <gesau@hotmail.co.uk>"]
 edition = "2021"
@@ -20,7 +20,9 @@ dyn-clone = "1.0.17"
 ref-cast = "1.0.22"
 
 # optional dependencies
-arrayvec07 = { version = "0.7", default-features = false, optional = true, package = "arrayvec" }
+bitcoin032 = { version = "0.32.102", default-features = false, features = ["serde"], optional = true, package = "bitcoin" }
+miniscript13 = { version = "13.1", default-features = false, features = ["serde"], optional = true, package = "miniscript" }
+arrayvec07 = { version = "0.7.2", default-features = false, optional = true, package = "arrayvec" }
 bigdecimal04 = { version = "0.4", default-features = false, optional = true, package = "bigdecimal" }
 bytes1 = { version = "1.0", default-features = false, optional = true, package = "bytes" }
 chrono04 = { version = "0.4.39", default-features = false, optional = true, package = "chrono" }
@@ -46,7 +48,7 @@ garde = { version = "0.23", features = ["derive", "email", "regex", "url"] }
 validator = { version = "0.21", features = ["derive"] }
 regex = { version = "1.10.6", default-features = false }
 
-arrayvec07 = { version = "0.7", default-features = false, features = ["serde"], package = "arrayvec" }
+arrayvec07 = { version = "0.7.2", default-features = false, features = ["serde"], package = "arrayvec" }
 bigdecimal04 = { version = "0.4", default-features = false, features = ["serde"], package = "bigdecimal" }
 bytes1 = { version = "1.0", default-features = false, features = ["serde"], package = "bytes" }
 chrono04 = { version = "0.4", default-features = false, features = ["serde"], package = "chrono" }
@@ -78,6 +80,12 @@ preserve_order = ["serde_json/preserve_order"]
 
 # Implements `JsonSchema` on `serde_json::value::RawValue`
 raw_value = ["serde_json/raw_value"]
+
+# Bitcoin's human-readable Serde formats, including its hash and key types.
+bitcoin032 = ["dep:bitcoin032"]
+
+# Miniscript policies and descriptors use Bitcoin's key types.
+miniscript13 = ["dep:miniscript13", "bitcoin032"]
 
 # For internal/CI use only
 _ui_test = []

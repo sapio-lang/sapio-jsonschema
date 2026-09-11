@@ -54,6 +54,12 @@ mod wrapper;
 
 mod atomic;
 
+#[cfg(feature = "bitcoin032")]
+mod bitcoin032;
+
+#[cfg(feature = "miniscript13")]
+mod miniscript13;
+
 #[cfg(feature = "std")]
 mod ffi;
 
