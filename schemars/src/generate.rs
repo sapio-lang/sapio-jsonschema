@@ -383,6 +383,21 @@ impl SchemaGenerator {
         schema
     }
 
+    /// Generates a subschema using the requested serialization contract.
+    ///
+    /// Shares definitions and recursive-type tracking with this generator,
+    /// then restores its previous contract. This allows a schema to describe
+    /// both accepted inputs and produced outputs in one reference graph.
+    pub fn subschema_for_with_contract<T: ?Sized + JsonSchema>(
+        &mut self,
+        contract: Contract,
+    ) -> Schema {
+        let previous = core::mem::replace(&mut self.settings.contract, contract);
+        let schema = self.subschema_for::<T>();
+        self.settings.contract = previous;
+        schema
+    }
+
     fn insert_new_subschema_for<T: ?Sized + JsonSchema>(&mut self, name: CowStr, uid: &SchemaUid) {
         // TODO: If we've already added a schema for T with the "opposite" contract, then check
         // whether the new schema is identical. If so, re-use the original for both contracts.
