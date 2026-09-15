@@ -58,6 +58,11 @@ let schema = SchemaSettings::draft07()
 
 ## Verification
 
+`SchemaGenerator::subschema_for_with_contract` generates an input or output
+subschema in the current reference graph, restoring the previous contract
+afterward. It preserves shared definitions and recursive-type tracking across
+both directions. Sapio uses it for callable interfaces nested in Rust DTOs.
+
 ```sh
 cargo test -p schemars --locked --features bitcoin032,miniscript13 \
   --test bitcoin032 --test miniscript13 --test schema_value
